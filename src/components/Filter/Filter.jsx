@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 
 const Filter = ({ filter, handleFilter }) => {
   return (
-    <div>
+    <label>
+      Find contacts by name
       <input onChange={handleFilter} type="text" name="filter" value={filter} />
-    </div>
+    </label>
   );
 };
 
