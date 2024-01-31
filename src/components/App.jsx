@@ -4,30 +4,22 @@ import { nanoid } from 'nanoid';
 import INITIAL_STATE from './State/State.jsx';
 import Section from './Section/Section.jsx';
 import ContactList from './ContactList/ContactList.jsx';
+import ContactForm from './ContactForm/ContactForm.jsx';
 
 export class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
+  state = { ...INITIAL_STATE };
 
   handleChange = evt => {
-    const { key, value } = evt.target;
-    this.setState({ [key]: value });
+    const { name, value } = evt.currentTarget;
+    this.setState({ [name]: value });
   };
 
   handleSubmit = evt => {
     evt.preventDefault();
-    const { contacts, name } = this.state;
-    const id = nanoid();
-    contacts.push({ name, id });
-
-    this.props.onSubmit({ ...this.state });
-    this.reset();
-  };
-
-  reset = () => {
-    this.setState({ ...INITIAL_STATE });
+    const contact = { id : nanoid(), name: this.state.name };
+    this.setState(prevState => ({
+      contacts: [{ ...contact }, ...prevState.contacts],
+    }));
   };
 
   render() {
@@ -35,21 +27,11 @@ export class App extends Component {
 
     return (
       <Section title="Phonebook">
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name
-            <input
-              type="text"
-              name="name"
-              value={name}
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <button type="submit">Add contact</button>
-        </form>
+        <ContactForm
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          name={name}
+        />
         <ContactList contacts={contacts} />
       </Section>
     );
