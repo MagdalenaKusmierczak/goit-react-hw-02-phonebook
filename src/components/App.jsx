@@ -5,6 +5,7 @@ import INITIAL_STATE from './State/State.jsx';
 import Section from './Section/Section.jsx';
 import ContactList from './ContactList/ContactList.jsx';
 import ContactForm from './ContactForm/ContactForm.jsx';
+import Filter from './Filter/Filter.jsx';
 
 export class App extends Component {
   state = { ...INITIAL_STATE };
@@ -26,8 +27,19 @@ export class App extends Component {
     }));
   };
 
+  handleFilter = evt => {
+    this.setState({ filter: evt.currentTarget.value });
+  };
+  filteredContacts = () => {
+    const { filter, contacts } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
   render() {
-    const { contacts, name, number } = this.state;
+    const { contacts, name, number, filter } = this.state;
 
     return (
       <Section title="Phonebook">
@@ -37,7 +49,8 @@ export class App extends Component {
           name={name}
           number={number}
         />
-        <ContactList contacts={contacts} />
+        <Filter filter={filter} handleFilter={this.handleFilter} />
+        <ContactList contacts={this.filteredContacts()} />
       </Section>
     );
   }
