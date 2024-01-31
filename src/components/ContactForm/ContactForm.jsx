@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const ContactForm = ({ handleSubmit, handleChange, name }) => {
+const ContactForm = ({ handleSubmit, handleChange, name, number }) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>
@@ -13,6 +13,18 @@ const ContactForm = ({ handleSubmit, handleChange, name }) => {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           onChange={handleChange}
           required
+        />
+      </label>
+      <label>
+        Number
+        <input
+          value={number}
+          type="tel"
+          name="number"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+          onChange={handleChange}
         />
       </label>
       <button type="submit">Add contact</button>

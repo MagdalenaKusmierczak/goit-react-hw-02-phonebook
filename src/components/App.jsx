@@ -16,14 +16,18 @@ export class App extends Component {
 
   handleSubmit = evt => {
     evt.preventDefault();
-    const contact = { id : nanoid(), name: this.state.name };
+    const contact = {
+      id: nanoid(),
+      name: this.state.name,
+      number: this.state.number,
+    };
     this.setState(prevState => ({
       contacts: [{ ...contact }, ...prevState.contacts],
     }));
   };
 
   render() {
-    const { contacts, name } = this.state;
+    const { contacts, name, number } = this.state;
 
     return (
       <Section title="Phonebook">
@@ -31,6 +35,7 @@ export class App extends Component {
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           name={name}
+          number={number}
         />
         <ContactList contacts={contacts} />
       </Section>
