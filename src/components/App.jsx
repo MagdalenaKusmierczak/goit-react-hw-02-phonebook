@@ -33,12 +33,21 @@ export class App extends Component {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
+  handleDelete = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
   render() {
+    const filtredContact = this.filteredContacts();
     return (
       <Section title="Phonebook">
         <ContactForm onSubmit={this.handleRepeat} />
         <Filter filter={this.state.filter} handleFilter={this.handleFilter} />
-        <ContactList contacts={this.filteredContacts()} />
+        <ContactList
+          contacts={filtredContact}
+          handleDelete={this.handleDelete}
+        />
       </Section>
     );
   }

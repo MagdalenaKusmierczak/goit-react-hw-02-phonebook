@@ -22,6 +22,7 @@ export default class ContactForm extends Component {
     };
     this.props.onSubmit(contact);
   };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
