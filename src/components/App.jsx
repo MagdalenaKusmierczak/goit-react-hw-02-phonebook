@@ -43,11 +43,10 @@ export class App extends Component {
     return (
       <Section title="Phonebook">
         <ContactForm onSubmit={this.handleRepeat} />
-        <Filter filter={this.state.filter} handleFilter={this.handleFilter} />
-        <ContactList
-          contacts={filtredContact}
-          handleDelete={this.handleDelete}
-        />
+
+        <ContactList contacts={filtredContact} handleDelete={this.handleDelete}>
+          <Filter filter={this.state.filter} handleFilter={this.handleFilter} />
+        </ContactList>
       </Section>
     );
   }
